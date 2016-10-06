@@ -5,3 +5,5 @@ https://web.math.pmf.unizg.hr/nastava/matsoft/
 
 In this class we get to know a bit of software that is usually used in mathematics.
 We cover basic from python (numpy, scipy, matplot...), sage, latex and markdown.
+
+Repository has 2 homeworks and solved tasks from 2 tests. 
