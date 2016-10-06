@@ -1,0 +1,41 @@
+\documentclass{article}
+
+\usepackage{sagetex}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\usepackage[T1]{fontenc}
+\usepackage[upright]{fourier}
+\usepackage{mathastext}
+
+
+
+\begin{document}
+
+U špilu ima 40 karti, da bi karta uzela rundu mora biti najveća briškula ili najveća prva bačena boja ako briškule nema.
+
+Na početku su nam podijeljene iduće karte: as od špada, 7 od špada te fant baštone.
+Ukoliko je briškula 2 špade koja je vjerojatnost da naša karta uzme rundu? \newline
+
+\begin{sageblock}
+            preostaleKarte = 36
+\end{sageblock}
+
+\begin{enumerate}
+    \item Kako je as od špada trenutno najjača karta u špilu vjerojatnost da uzmemo rundu ako bacimo asa je:      $$\sage{(1 - (0/preostaleKarte))*100}\%$$
+    
+    \item Od 7 od špade postoje samo 3 jače karte, a od te 3 mi imamo jednu, stog da uzmemo rundu vjerojatnost je:    $$ 1 - p(jacaKarta) = \sage{ RR((1-(2/preostaleKarte))*100) } \% $$
+    
+    \item Ako bacimo fant od baštona vjerojatnost uzmimanja runde je:
+        \begin{sagecommandline}
+            sage: brojJacihIstaBoja = 2
+            sage: brojJacihBriskula = 10 - 1 - 1
+            sage: vjerojatnost = 1 - (brojJacihIstaBoja + brojJacihBriskula)/preostaleKarte
+            sage: RR(vjerojatnost*100)
+        \end{sagecommandline}
+        
+        
+\end{enumerate}
+
+\end{document}
+%sagemathcloud={"latex_command":"pdflatex -synctex=1 -interact=nonstopmode 'Prvi_dio_sagetex.tex'"}

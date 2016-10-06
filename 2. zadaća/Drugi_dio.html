@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Briškula</title>
+    <script src="https://sagecell.sagemath.org/static/jquery.min.js"></script>
+    <script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+    <script>$(function () {
+    sagecell.makeSagecell({
+      editor: "textarea-readonly",//codemirror-readonly
+      editorToggle: "codemirror-readonly",
+      inputLocation: 'div.compute',
+//      template: sagecell.templates.restricted,  //ako želimo zabraniti mijenjanje koda
+//      template: sagecell.templates.minimal,  //ako ne želimo da se vidi kod
+      hide: ["permalinks"], //
+      evalButtonText: 'Izračunaj'
+    });
+    });
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://sagecell.sagemath.org/static/sagecell_embed.css">
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic&subset=latin,latin-ext);
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz&subset=latin,latin-ext);
+
+      body {
+        font-family: 'Libre Baskerville';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+        margin-top: 10px;
+      }
+      h1 { font-size: 3.5em; }
+      h2 { font-size: 3em; }
+      h3 { font-size: 1.6em; }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+/*        text-decoration: none;*/
+      }
+/*      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+      }*/
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+/*      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }*/
+      .inverse {
+        background: #272822;
+/*        color: #777872;*/
+        color: white;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #F3F3F3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 2em;
+      }
+    </style>
+  </head>
+<body>
+<textarea id="source">
+name: inverse
+layout: true
+class: center, middle, inverse
+
+---
+
+# Vjerojatnost
+
+---
+
+layout: false
+class: middle
+## Definicija
+
+Definicija. Neka je $\Omega$ neprazan skup i $F$ $\sigma$-algebra na $\Omega$. Vjerojatnost je funkcija $$ \mathbb{P}:F\rightarrow \mathbb{R} $$
+            sa sljedećim svojstvima:<br>
+            (P1)  $\quad 0 \le \mathbb{P}(A) \le 1,  	\forall A \in F$ <br>
+            (P2)  $\quad \mathbb{P}(\Omega) = 1, $ <br>
+            (P3)  $\quad A_1,A_2,\ldots \in F$ međusobno disjunktni
+                  $$ \Longrightarrow \mathbb{P}(A_1 \cup A_2 \cup \ldots)= \mathbb{P}(A_1) + \mathbb{P}(A_2) \ldots$$ <br>
+
+---
+
+
+## Kockice
+
+Bacamo dvije simetrične kocke. Izračunajte vjerojatnost događaja da je suma brojeva na kockama 7 ili 11.
+$$ \mathbb{P}(suma=7) = 6/36 $$
+$$ \mathbb{P}(suma=11) = 2/36 $$
+$$ \mathbb{P}(suma=7 \cup suma=11) = \mathbb{P}(suma=7) + \mathbb{P}(suma=11) $$
+
+<div class="compute">
+<script type="text/x-sage">
+vjerojatnost = 6/36 + 2/36
+print "Vjerojatnost takovog događaja je: %lg " %vjerojatnost
+</script>
+</div>
+
+
+---
+
+
+## Kockica(2)
+
+Simetričnu kocku bacamo n puta. Kolika je vjerojatnost da ćemo svaki puta dobiti veći broj?
+$$ \Omega = {(i_1,i_2,\ldots,i_n): i,j,k \in {1,2,3,4,5,6}} $$
+$$ \mathbb{P}({(i_1,i_2,\ldots,i_n)}) = 1/\Omega = 1/6^n$$
+$$ A = {(i_1,i_2,\ldots,i_n) : 1 \le i_1 \lt i_2 \lt \ldots \lt i_n \le 6}$$
+$$ \mathbb{P}(A) = \frac{\mid A \mid}{\mid \Omega \mid} $$
+
+
+<div class="compute">
+<script type="text/x-sage">
+@interact
+def _(brojBacanja=slider(1,6,1)):
+  A = binomial(6, brojBacanja)
+  O = 6**brojBacanja
+  print "Vjerojatnost takovog događaja je: %lg " %(A/O)
+</script>
+</div>
+
+
+---
+
+
+## Problem rođendana
+
+Izračunajte vjerojatnost da je u grupi od n ljudi barem dvoje rođeno istog dana.
+
+$ A $ := { barem dvoje od n ljudi je rođeno istog dana } <br>
+$ A^c $ := { svi su rođeni na različite dane }
+
+$$ \mid A^c \mid = 365 \cdot (365 - 1) \cdot (365 - 2) \cdot \ldots \cdot (365 - n + 1) $$
+$$ \Longrightarrow \quad \mathbb{P}(A) = 1 - \mathbb{P}(A^c) = 1 - \frac{365 \cdot 364 \cdot \ldots \cdot (365 - n + 1) }{365^n} $$
+
+
+<div class="compute">
+<script type="text/x-sage">
+
+def brojnik (n):
+    return prod ( (365-i) for i in range (n))
+
+@interact
+def _(brojLjudi=slider(1,100,4)):
+    rezlutat = 1 - (brojnik(brojLjudi) / (365**brojLjudi))
+    print "Vjerojatnost takovog događaja je: %lg" %rezlutat
+</script>
+</div>
+
+
+---
+
+## Problem rođendana (vizualizacija)
+
+Izračunajte vjerojatnost da je u grupi od n ljudi barem dvoje rođeno istog dana.
+
+<div class="compute">
+<script type="text/x-sage">
+
+def brojnik (n):
+    return prod ( (365-i) for i in range (n))
+
+def vjerojatnost(x):
+    return (1 - (brojnik(x) / (365**x)))*100
+
+def niz():
+    lista = [(i, vjerojatnost(i)) for i in range(200)]
+    return lista
+
+vizualizacija = point(niz())
+
+vizualizacija.ymax(102.0)
+vizualizacija.ymin(-0.5)
+vizualizacija.axes_labels([r'broj ljudi', r'vjerojatnost u %'])
+vizualizacija
+
+</script>
+</div>
+
+Što napraviti ako želimo nacrtati pravac od ovih točaka?
+
+---
+
+
+## Problem rođendana (vizualizacija 2)
+
+Koristeći "Real Interpolation using GSL" dobivamo slijedeći graf.
+
+<div class="compute">
+<script type="text/x-sage">
+
+def brojnik (n):
+    return prod ( (365-i) for i in range (n))
+
+def vjerojatnost(x):
+    return (1 - (brojnik(x) / (365**x)))*100
+
+def niz():
+    lista = [(i, vjerojatnost(i)) for i in range(200)]
+    return lista
+
+splajn = spline(niz())
+
+vizualizacija = plot(splajn, (1, 100))
+
+vizualizacija.ymax(102.0)
+vizualizacija.ymin(-0.5)
+vizualizacija.axes_labels([r'broj ljudi', r'vjerojatnost u %'])
+vizualizacija
+
+</script>
+</div>
+
+---
+
+## Radni dani
+
+Jednog radnog tjedna u nekom gradu n ljudi je pozvalo električara u
+svoje kuće radi popravka nekih električnih uređaja. Svaki čovjek je slučajno odabrao
+neki radni dan u tom tjednu i pozvao električara. Izračunajte vjerojatnost događaja: <br>
+A := { električar nema posla barem jedan dan }
+
+$$ \Omega = {1,2,3,4,5}^n \quad \Rightarrow \quad \mid \Omega \mid = 5^n $$
+$ A_i $ := { i-ti radni dan nitko nije zvao električara },  $ i = 1,2,3,4,5 $ <br>
+
+$$ \mathbb{P}(A_i) = \frac{4^n}{5^n}, \quad \mathbb{P}(A_i \cap A_j) = \frac{3^n}{5^n}, \ldots $$
+$$ A = A_1 \cup A_2 \cup A_3 \cup A_4 \cup A_5 $$
+
+\begin{multline\*}
+    \mathbb{P}(A) = Sylvestrova = \binom{5}{1} \cdot \mathbb{P}(A_1) - \binom{5}{2} \cdot \mathbb{P}(A_1 \cap A_2) + \ldots \\\\
+    +\mathbb{P}(A_1 \cap A_2 \cap A_3 \cap A_4 \cap A_5)
+\end{multline\*}
+
+
+<div class="compute">
+<script type="text/x-sage">
+
+def razlomak (a, b, n):
+    return a**n / b**n
+
+@interact
+def _(brojPoziva=slider(0,30,1)):
+    rezlutat = 5*razlomak(4,5,brojPoziva) - 10*razlomak(3,5,brojPoziva) + 10*razlomak(2,5,brojPoziva) - 5*razlomak(1,5,brojPoziva)
+    print "Vjerojatnost takovog događaja je: %lg" %rezlutat
+</script>
+</div>
+
+
+---
+
+## Radni dani (vizualizacija)
+
+Cilj je vizualizirati kako se ovisnost slobodnih dana mijenja u odnosu na broj poziva.
+
+<div class="compute">
+<script type="text/x-sage">
+
+def razlomak (a, b, n):
+    return a**n / b**n
+
+def vjerojatnost(x):
+    return (5*razlomak(4,5,x) - 10*razlomak(3,5,x) + 10*razlomak(2,5,x) - 5*razlomak(1,5,x))*100
+
+def niz():
+    lista = [(i, vjerojatnost(i)) for i in range(30)]
+    return lista
+
+anneau=RDF['x']
+splajn1 = anneau.lagrange_polynomial(niz())
+splajn2 = spline(niz())
+tocke = point(niz())
+print tocke
+krivulja1 = plot(splajn1(x), (0, 30), color='red')
+krivulja2 = plot(splajn2, (0, 30), color='green')
+
+show(tocke + krivulja1 + krivulja2, ymin = -.5, ymax = 120,axes_labels=['Broj poziva','Vjerojatnost u %'])
+
+
+</script>
+</div>
+
+---
+
+
+
+
+## Bombardiranje Londona
+
+Njemačka vojska je raketama V2 ga dala London. Zabilježeni su pogotci za južni dio Londona koji je bio razdijeljen na 576 dijelova. Dobiveni su podaci:
+
+\begin{array}{|c|c|c|c|c|c|c|c|}
+\hline broj \quad raketa (k)  & 0   & 1   & 2  & 3  & 4 & 5 \, ili \, više & suma \\\
+\hline broj \, palih \, raketa \, u \, dio & 229 & 221 & 93 & 35 & 7 & 1 & 535 \\\
+\hline
+\end{array}
+    
+Slijedi primjer broja pogodaka ukoliko je vjerojatnost pogotka svakod dijela jednaka.
+
+<div class="compute">
+<script type="text/x-sage">
+from collections import Counter
+
+
+@interact
+def _(baceneBombe=slider(430,1000,35, default = 535)):
+    P = [1/baceneBombe for _ in range(baceneBombe)]
+    podrucja = [0] * len(P)
+    X = GeneralDiscreteDistribution(P)
+    for _ in range(baceneBombe):
+        podrucja[X.get_random_element()] += 1
+
+    print "Vlastita tablica s %d bacenih raketi." %baceneBombe
+    print table([['Pale rakete', '0', '1', '2', '3', '4' , '5'], ["Br. podr. po raketama", podrucja.count(0), podrucja.count(1), podrucja.count(2), podrucja.count(3), podrucja.count(4), podrucja.count(5)]])
+    if(podrucja.count(0) + podrucja.count(1) + podrucja.count(2) + podrucja.count(3) + podrucja.count(4) + podrucja.count(5) != baceneBombe):
+        print "\n Negdje je palo i vise od 5 bombi, potpuni ispis: \n", Counter(podrucja)
+</script>
+</div>
+
+
+---
+
+
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+
+
+# Briskula
+
+Briškula je većinom igra na sreću ali poznavanje vjerojatnosti može pomoći.
+
+---
+
+
+layout: false
+class: middle
+# Podjela karata
+
+Na početku, podijeli se 3 ili 4 karte svakom igraču (ovisno o dogovoru), te se jedna preokrene. Preokrenuta karta naziva se briškula.
+
+Koliko početnih kombinacija postoji?
+<div class="compute">
+<script type="text/x-sage">
+@interact
+def _(brojKarti=slider(3,4,1)):
+    podjela = Combinations(range(40), brojKarti*2+1)
+    print "Broj mogućih različitih podjela je: ", podjela.cardinality()
+</script>
+</div>
+
+Ako mislite da je to mnogo kombinacija, koliko različiti igri postoji?
+---
+
+# Broj različitih igri
+
+Tijekom svakog dijeljenja, moguće je dobiti bilo koju preostalu kartu, te izabrati jednu od 3/4 koju želimo baciti.
+
+<div class="compute">
+<script type="text/x-sage">
+@interact
+def _(brojKarti=slider(3,4,1)):
+	if(brojKarti == 3):
+		brojIgri = factorial(40) * (brojKarti * brojKarti * 18) * 2 * 2
+	else:
+		brojIgri = factorial(40) * (brojKarti * brojKarti * 9 * 3 * 3 * 9) * 2 * 2
+    print "Broj mogućih različitih igri je: %e " %brojIgri
+</script>
+</div>
+
+
+
+</textarea>
+
+
+
+<!--<script type="text/javascript" src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>-->
+<script type="text/javascript" src="js/remark-latest.min.js"></script>
+<!-- želim skrolanje, ne želim brojeve stranica -->
+<style type="text/css">
+.remark-container {
+  overflow-y: scroll;
+}
+.remark-slide-scaler {
+  overflow-y: scroll;
+      }
+.remark-slide-number{
+  display:none;
+      }
+</style>
+
+
+<!-- load MathJax -->
+    <script src="http://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript"></script>
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+          TeX: { equationNumbers: { autoNumber: "AMS" } },
+          tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          displayMath: [ ['$$','$$'], ['\[','\]'] ],
+          processEnvironments: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+      });
+      MathJax.Hub.Queue(function() {
+          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+              return(elem.SourceElement());
+          }).parent().addClass('has-jax');
+      });
+
+      MathJax.Hub.Configured();
+    </script>
+</body>
+</html>
